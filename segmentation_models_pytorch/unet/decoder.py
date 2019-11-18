@@ -38,15 +38,16 @@ class DecoderBlock(nn.Module):
         # return x
 
         x, skip = x
-        print('before: {x.shape}')
+        print(f'before: {x.shape}')
         x = F.interpolate(x, scale_factor=2, mode='nearest')
         if skip is not None:
+            print(f'skip: {skip.shape}')
             x = torch.cat([x, skip], dim=1)
             x = self.attention1(x)
-        print('after concat: {x.shape}')
+        print(f'after concat: {x.shape}')
         x = self.block(x)
         x = self.attention2(x)
-        print('after block: {x.shape}')
+        print(f'after block: {x.shape}')
         return x
 
 
