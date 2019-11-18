@@ -41,13 +41,13 @@ class DecoderBlock(nn.Module):
         print(f'before: {x.shape}')
         x = F.interpolate(x, scale_factor=2, mode='nearest')
         if skip is not None:
-            print(f'skip: {skip.shape}')
+            # print(f'skip: {skip.shape}')
             x = torch.cat([x, skip], dim=1)
             x = self.attention1(x)
-        print(f'after concat: {x.shape}')
+        # print(f'after concat: {x.shape}')
         x = self.block(x)
         x = self.attention2(x)
-        print(f'after block: {x.shape}')
+        # print(f'after block: {x.shape}')
         return x
 
 
@@ -78,7 +78,7 @@ class UnetDecoder(Model):
 
         in_channels = self.compute_channels(encoder_channels, decoder_channels)
         out_channels = decoder_channels
-        print(encoder_channels,decoder_channels)
+        print(encoder_channels[0]+decoder_channels[:-1])
         self.layer1 = DecoderBlock(in_channels[0], out_channels[0],
                                    use_batchnorm=use_batchnorm, attention_type=attention_type)
         self.layer2 = DecoderBlock(in_channels[1], out_channels[1],
