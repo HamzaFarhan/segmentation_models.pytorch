@@ -16,6 +16,9 @@ class DecoderBlock(nn.Module):
             self.attention1 = SCSEModule(in_channels)
             self.attention2 = SCSEModule(out_channels)
 
+        self.conv1 = nn.Conv2d(in_channels,4,3,1,1)
+        self.conv2 = nn.Conv2d(1,in_channels,3,1,1)
+
         self.block = nn.Sequential(
             Conv2dReLU(in_channels, out_channels, kernel_size=3, padding=1, use_batchnorm=use_batchnorm),
             Conv2dReLU(out_channels, out_channels, kernel_size=3, padding=1, use_batchnorm=use_batchnorm),
@@ -23,7 +26,9 @@ class DecoderBlock(nn.Module):
 
     def forward(self, x):
         x, skip = x
-        x = F.interpolate(x, scale_factor=2, mode='nearest')
+        x = self.conv1(x)
+        x = F.pixel_shuffle(x,2)
+        x = self.conv2(x)        
         if skip is not None:
             x = torch.cat([x, skip], dim=1)
             x = self.attention1(x)
