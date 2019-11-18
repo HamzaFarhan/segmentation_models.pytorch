@@ -24,17 +24,29 @@ class DecoderBlock(nn.Module):
         )
 
     def forward(self, x):
+        # x, skip = x
+        # print(x.shape,self.conv1,print(x.shape[1]+self.conv1.in_channels))
+        # # x = self.conv1(x)
+        # x = F.pixel_shuffle(x,2)
+        # # x = self.conv2(x)        
+        # if skip is not None:
+        #     x = torch.cat([x, skip], dim=1)
+        #     x = self.attention1(x)
+
+        # x = self.block(x)
+        # x = self.attention2(x)
+        # return x
+
         x, skip = x
-        print(x.shape,self.conv1,print(x.shape[1]+self.conv1.in_channels))
-        # x = self.conv1(x)
-        x = F.pixel_shuffle(x,2)
-        # x = self.conv2(x)        
+        print('before: {x.shape}')
+        x = F.interpolate(x, scale_factor=2, mode='nearest')
         if skip is not None:
             x = torch.cat([x, skip], dim=1)
             x = self.attention1(x)
-
+        print('after concat: {x.shape}')
         x = self.block(x)
         x = self.attention2(x)
+        print('after block: {x.shape}')
         return x
 
 
