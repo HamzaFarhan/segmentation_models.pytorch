@@ -15,8 +15,8 @@ class DecoderBlock(nn.Module):
         elif attention_type == 'scse':
             self.attention1 = SCSEModule(in_channels)
             self.attention2 = SCSEModule(out_channels)
-        # self.conv1 = nn.Conv2d(in_channels,4,3,1,1)
-        # self.conv2 = nn.Conv2d(1,in_channels,3,1,1)
+        self.conv1 = nn.Conv2d(in_channels,4,3,1,1)
+        self.conv2 = nn.Conv2d(1,in_channels,3,1,1)
 
         self.block = nn.Sequential(
             Conv2dReLU(in_channels, out_channels, kernel_size=3, padding=1, use_batchnorm=use_batchnorm),
