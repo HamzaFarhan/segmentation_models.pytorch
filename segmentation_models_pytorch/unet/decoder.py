@@ -7,7 +7,7 @@ from ..base.model import Model
 
 
 class DecoderBlock(nn.Module):
-    def __init__(self, in_channels, out_channels, pixel_shuffle_channels, use_batchnorm=True, attention_type=None):
+    def __init__(self, in_channels, out_channels, pixel_shuffle_channels=[], use_batchnorm=True, attention_type=None):
         super().__init__()
         if attention_type is None:
             self.attention1 = nn.Identity()
