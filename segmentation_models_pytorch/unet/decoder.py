@@ -24,7 +24,6 @@ class DecoderBlock(nn.Module):
 
     def forward(self, x):
         x, skip = x
-        print(x.shape,self.conv1,print(x.shape[1]+self.conv1.in_channels))
         x = F.pixel_shuffle(x,2)
         x = self.conv1(x)        
         if skip is not None:
