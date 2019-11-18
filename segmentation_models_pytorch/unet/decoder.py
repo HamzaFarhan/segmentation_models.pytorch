@@ -78,7 +78,7 @@ class UnetDecoder(Model):
 
         in_channels = self.compute_channels(encoder_channels, decoder_channels)
         out_channels = decoder_channels
-        print(encoder_channels[0]+decoder_channels[:-1])
+        print(encoder_channels[:1]+decoder_channels[:-1])
         self.layer1 = DecoderBlock(in_channels[0], out_channels[0],
                                    use_batchnorm=use_batchnorm, attention_type=attention_type)
         self.layer2 = DecoderBlock(in_channels[1], out_channels[1],
