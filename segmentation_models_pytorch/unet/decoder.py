@@ -15,7 +15,6 @@ class DecoderBlock(nn.Module):
         elif attention_type == 'scse':
             self.attention1 = SCSEModule(in_channels)
             self.attention2 = SCSEModule(out_channels)
-
         self.conv1 = nn.Conv2d(in_channels,4,3,1,1)
         self.conv2 = nn.Conv2d(1,in_channels,3,1,1)
 
@@ -26,6 +25,7 @@ class DecoderBlock(nn.Module):
 
     def forward(self, x):
         x, skip = x
+        print(x.shape,self.conv1)
         x = self.conv1(x)
         x = F.pixel_shuffle(x,2)
         x = self.conv2(x)        
