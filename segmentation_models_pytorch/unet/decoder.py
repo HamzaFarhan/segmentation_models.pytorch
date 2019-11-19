@@ -36,6 +36,7 @@ def icnr(x, scale=2, init=nn.init.kaiming_normal_):
 class PixelShuffle_ICNR(nn.Module):
     "Upsample by `scale` from `ni` filters to `nf` (default `ni`), using `nn.PixelShuffle`, `icnr` init, and `weight_norm`."
     def __init__(self, ni:int, nf:int=None, scale:int=2, blur:bool=False, norm_type='weight', leaky:float=None):
+        super(PixelShuffle_ICNR, self).__init__()
         if nf is None:
             nf = ni
         self.conv = conv_layer(ni, nf*(scale**2), ks=1, norm_type=norm_type, use_activ=False)
@@ -73,7 +74,7 @@ class DecoderBlock(nn.Module):
 
     def forward(self, x):
         x, skip = x
-        
+
         x = self.shuffle(x)
 
         # x = F.pixel_shuffle(x,2)
