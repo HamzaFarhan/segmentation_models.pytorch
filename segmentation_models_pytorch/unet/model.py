@@ -38,6 +38,7 @@ class Unet(EncoderDecoder):
             activation='sigmoid',
             center=False,  # usefull for VGG models
             attention_type=None,
+            upsample='transpose',
             shuffle_blur=True
     ):
         encoder = get_encoder(
@@ -52,6 +53,7 @@ class Unet(EncoderDecoder):
             use_batchnorm=decoder_use_batchnorm,
             center=center,
             attention_type=attention_type,
+            upsample=upsample,
             shuffle_blur=shuffle_blur
         )
 
