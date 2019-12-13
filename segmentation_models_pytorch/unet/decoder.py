@@ -17,7 +17,7 @@ class DecoderBlock(nn.Module):
             self.attention1 = SCSEModule(in_channels)
             self.attention2 = SCSEModule(out_channels)
         upsample_dict = {'shuffle': PixelShuffle_ICNR(upsample_channels, upsample_channels, scale=2, blur=shuffle_blur),
-                         'transpose': nn.ConvTranspose2d(upsample_channels, upsample_channels, kernel=2, stride=2)}
+                         'transpose': nn.ConvTranspose2d(upsample_channels, upsample_channels, kernel_size=2, stride=2)}
         self.up = upsample_dict[upsample]
         # self.shuffle = PixelShuffle_ICNR(upsample_channels, upsample_channels, scale=2, blur=shuffle_blur)
 
